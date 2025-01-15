@@ -6,12 +6,24 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 public class Config extends TelegramLongPollingBot {
 
     // Возвращает токен бота
     @Override
     public String getBotToken() {
-        return "8113459837:AAHYSQ0WwPLJjwgwXB_K97pDx7-uqM9vkd0";
+        try {
+            Path path = Paths.get(ClassLoader.getSystemResource("token").toURI());
+            return Files.readString(path);
+        } catch (URISyntaxException | IOException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     // Возвращает имя бота
